@@ -8,6 +8,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Table(name = "orders")
 @Getter
@@ -19,7 +21,7 @@ public class Order {
     @Column(name = "order_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id") // FK 'member_id'
     private Member member;
 
@@ -31,7 +33,7 @@ public class Order {
     * 따라서 Order가 연관관계 주인.
     * @JoinColumn: 이 필드가 주인이다.
      */
-    @OneToOne
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 

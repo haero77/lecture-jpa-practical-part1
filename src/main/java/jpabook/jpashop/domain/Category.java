@@ -9,6 +9,8 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype")
@@ -34,7 +36,7 @@ public class Category {
     private List<Item> items = new ArrayList<>();
 
     // 계층구조 만들기
-    @ManyToOne // 하나의 부모에 여러 자식
+    @ManyToOne(fetch = LAZY) // 하나의 부모에 여러 자식
     @JoinColumn(name = "parent_id")
     private Category parent;
 
