@@ -25,7 +25,17 @@ public class Order {
     @JoinColumn(name = "member_id") // FK 'member_id'
     private Member member;
 
-    @OneToMany(mappedBy = "order") // OrderItem.order
+    /**
+     * (CascadeType.ALL 적용 전)
+     * persist(orderItemA)
+     * persist(orderItemB)
+     * persist(orderItemC)
+     * persist(order)
+     *
+     * (CascadeType.ALL 적용 후)
+     * persist(order)
+     */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL) // OrderItem.order
     private List<OrderItem> orderItems = new ArrayList<>();
 
     /*
@@ -33,7 +43,15 @@ public class Order {
     * 따라서 Order가 연관관계 주인.
     * @JoinColumn: 이 필드가 주인이다.
      */
-    @OneToOne(fetch = LAZY)
+    /**
+     * (CascadeType.ALL 적용 전)
+     * persist(delivery)
+     * persist(order)
+     *
+     * (CascadeType.ALL 적용 후)
+     * persist(order)
+     */
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
